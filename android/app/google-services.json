@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "9265569964",
+    "project_id": "fast-shopping-89c01",
+    "storage_bucket": "fast-shopping-89c01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9265569964:android:6b71d04eca263a33d4bf09",
+        "android_client_info": {
+          "package_name": "com.example.fast_shopping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9265569964-a6fncacaj94423172sc8j8eqtdt8njth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-7ZYk5TssK-rZp0Wv66k92rL9JhnFjNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9265569964-a6fncacaj94423172sc8j8eqtdt8njth.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9265569964-9vc1c36uuc26ktidlng8k1igvujajfbp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fastShopping"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
