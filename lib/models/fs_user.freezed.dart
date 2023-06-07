@@ -24,6 +24,9 @@ mixin _$FSUser {
   String get email => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
+  List<String> get products => throw _privateConstructorUsedError;
+  List<String> get productsHistory => throw _privateConstructorUsedError;
+  bool get isAdmin => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +38,14 @@ abstract class $FSUserCopyWith<$Res> {
   factory $FSUserCopyWith(FSUser value, $Res Function(FSUser) then) =
       _$FSUserCopyWithImpl<$Res, FSUser>;
   @useResult
-  $Res call({String uid, String email, String firstName, String lastName});
+  $Res call(
+      {String uid,
+      String email,
+      String firstName,
+      String lastName,
+      List<String> products,
+      List<String> productsHistory,
+      bool isAdmin});
 }
 
 /// @nodoc
@@ -55,6 +65,9 @@ class _$FSUserCopyWithImpl<$Res, $Val extends FSUser>
     Object? email = null,
     Object? firstName = null,
     Object? lastName = null,
+    Object? products = null,
+    Object? productsHistory = null,
+    Object? isAdmin = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -73,6 +86,18 @@ class _$FSUserCopyWithImpl<$Res, $Val extends FSUser>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      products: null == products
+          ? _value.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      productsHistory: null == productsHistory
+          ? _value.productsHistory
+          : productsHistory // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isAdmin: null == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -83,7 +108,14 @@ abstract class _$$FSUser$CopyWith<$Res> implements $FSUserCopyWith<$Res> {
       __$$FSUser$CopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uid, String email, String firstName, String lastName});
+  $Res call(
+      {String uid,
+      String email,
+      String firstName,
+      String lastName,
+      List<String> products,
+      List<String> productsHistory,
+      bool isAdmin});
 }
 
 /// @nodoc
@@ -100,6 +132,9 @@ class __$$FSUser$CopyWithImpl<$Res>
     Object? email = null,
     Object? firstName = null,
     Object? lastName = null,
+    Object? products = null,
+    Object? productsHistory = null,
+    Object? isAdmin = null,
   }) {
     return _then(_$FSUser$(
       uid: null == uid
@@ -118,6 +153,18 @@ class __$$FSUser$CopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      products: null == products
+          ? _value.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      productsHistory: null == productsHistory
+          ? _value.productsHistory
+          : productsHistory // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isAdmin: null == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -129,7 +176,10 @@ class _$FSUser$ implements FSUser$ {
       {required this.uid,
       required this.email,
       required this.firstName,
-      required this.lastName});
+      required this.lastName,
+      this.products = const <String>[],
+      this.productsHistory = const <String>[],
+      this.isAdmin = false});
 
   factory _$FSUser$.fromJson(Map<String, dynamic> json) =>
       _$$FSUser$FromJson(json);
@@ -142,10 +192,19 @@ class _$FSUser$ implements FSUser$ {
   final String firstName;
   @override
   final String lastName;
+  @override
+  @JsonKey()
+  final List<String> products;
+  @override
+  @JsonKey()
+  final List<String> productsHistory;
+  @override
+  @JsonKey()
+  final bool isAdmin;
 
   @override
   String toString() {
-    return 'FSUser(uid: $uid, email: $email, firstName: $firstName, lastName: $lastName)';
+    return 'FSUser(uid: $uid, email: $email, firstName: $firstName, lastName: $lastName, products: $products, productsHistory: $productsHistory, isAdmin: $isAdmin)';
   }
 
   @override
@@ -158,12 +217,24 @@ class _$FSUser$ implements FSUser$ {
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
-                other.lastName == lastName));
+                other.lastName == lastName) &&
+            const DeepCollectionEquality().equals(other.products, products) &&
+            const DeepCollectionEquality()
+                .equals(other.productsHistory, productsHistory) &&
+            (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uid, email, firstName, lastName);
+  int get hashCode => Object.hash(
+      runtimeType,
+      uid,
+      email,
+      firstName,
+      lastName,
+      const DeepCollectionEquality().hash(products),
+      const DeepCollectionEquality().hash(productsHistory),
+      isAdmin);
 
   @JsonKey(ignore: true)
   @override
@@ -184,7 +255,10 @@ abstract class FSUser$ implements FSUser {
       {required final String uid,
       required final String email,
       required final String firstName,
-      required final String lastName}) = _$FSUser$;
+      required final String lastName,
+      final List<String> products,
+      final List<String> productsHistory,
+      final bool isAdmin}) = _$FSUser$;
 
   factory FSUser$.fromJson(Map<String, dynamic> json) = _$FSUser$.fromJson;
 
@@ -196,6 +270,12 @@ abstract class FSUser$ implements FSUser {
   String get firstName;
   @override
   String get lastName;
+  @override
+  List<String> get products;
+  @override
+  List<String> get productsHistory;
+  @override
+  bool get isAdmin;
   @override
   @JsonKey(ignore: true)
   _$$FSUser$CopyWith<_$FSUser$> get copyWith =>

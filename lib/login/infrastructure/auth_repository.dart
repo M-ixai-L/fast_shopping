@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_shopping/login/application/index.dart';
+import 'package:fast_shopping/models/fs_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
@@ -53,6 +54,14 @@ class AuthRepository {
     return _firebaseAuth.authStateChanges().map((event) {
       return event;
     });
+  }
+
+  Future<FSUser?> getUser() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    final doc =
+        await _firebaseFirestore.collection('users').doc(user!.uid).get();
+    return FSUser.fromJson(doc.data()!);
   }
 
   Future<void> logout() async {

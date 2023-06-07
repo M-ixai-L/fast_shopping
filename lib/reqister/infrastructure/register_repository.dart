@@ -1,21 +1,16 @@
-import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_shopping/models/fs_user.dart';
-import 'package:fast_shopping/utils/http_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class RegisterRepository {
-  const RegisterRepository({
-    required FirebaseAuth firebaseAuth,
-    required HttpService httpService,
-  })  : _firebaseAuth = firebaseAuth,
-        _httpService = httpService;
+  RegisterRepository({required FirebaseAuth firebaseAuth})
+      : _firebaseAuth = firebaseAuth;
 
   final FirebaseAuth _firebaseAuth;
 
-  final HttpService _httpService;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<FSUser?> registerNewUser({
     required String email,
@@ -34,13 +29,15 @@ class RegisterRepository {
         email: email,
         firstName: firstName,
         lastName: lastName,
+        products: [],
       );
-      final String? request = await _httpService.makeSetRequest(
-          name:
-              '/user?methodName=updateUser&userData=${jsonEncode(user.toJson())}');
-      if (request != null) {
-        return FSUser.fromJson(jsonDecode(request));
-      }
+
+      await _firestore
+          .collection("users")
+          .doc(firebaseUser.uid)
+          .set(user.toJson());
+
+      return user;
     }
     return null;
   }
@@ -56,13 +53,11 @@ class RegisterRepository {
       email: email,
       firstName: firstName,
       lastName: lastName,
+      products: [],
     );
-    final String? request = await _httpService.makeSetRequest(
-        name:
-            '/user?methodName=updateUser&userData=${jsonEncode(user.toJson())}');
-    if (request != null) {
-      return FSUser.fromJson(jsonDecode(request));
-    }
-    return null;
+
+    await _firestore.collection("users").doc(uid).set(user.toJson());
+
+    return user;
   }
 }

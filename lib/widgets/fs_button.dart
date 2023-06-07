@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FSButton extends StatelessWidget {
-  const FSButton(
-      {Key? key,
-      required this.onPressed,
-      required this.text,
-      this.isLoading = false})
-      : super(key: key);
+  const FSButton({
+    Key? key,
+    required this.onPressed,
+    required this.text,
+    this.isLoading = false,
+    this.color,
+  }) : super(key: key);
 
   final VoidCallback onPressed;
   final String text;
   final bool isLoading;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -19,7 +21,7 @@ class FSButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
+          color: color ?? Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(100),
         ),
         width: 190,

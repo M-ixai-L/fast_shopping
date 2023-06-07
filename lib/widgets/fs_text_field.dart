@@ -12,6 +12,7 @@ class FSTextFormField extends StatelessWidget {
   final bool isPassword;
   final TextInputAction? textInputAction;
   final Widget? suffixIcon;
+  final Color? textColor;
 
   const FSTextFormField({
     Key? key,
@@ -25,6 +26,7 @@ class FSTextFormField extends StatelessWidget {
     this.focusNode,
     this.nextFocusNode,
     this.suffixIcon,
+    this.textColor,
   }) : super(key: key);
 
   @override
@@ -41,7 +43,7 @@ class FSTextFormField extends StatelessWidget {
               title,
               style: GoogleFonts.raleway(
                 fontSize: 12,
-                color:
+                color: textColor ??
                     Theme.of(context).colorScheme.background.withOpacity(0.8),
                 fontWeight: FontWeight.w400,
               ),
