@@ -51,7 +51,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
             child: Scaffold(
               backgroundColor: const Color(0xFFD5F4E9),
               body: Padding(
-                padding: const EdgeInsets.only(top: 30, left: 38, right: 38),
+                padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
                 child: Column(
                   children: [searchFieldWidget, cardsWidget(state)],
                 ),
@@ -120,7 +120,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
     return Row(
       children: [
         SizedBox(
-          width: 280,
+          width: MediaQuery.of(context).size.width - 80,
           child: TextField(
             controller: textEditingController,
             onEditingComplete: () {

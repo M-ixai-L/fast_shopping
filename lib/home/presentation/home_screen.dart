@@ -258,30 +258,55 @@ Future<void> openScanner(BuildContext context) async {
               actionsAlignment: MainAxisAlignment.spaceBetween,
               actions: <Widget>[
                 TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  child: const Text('Cancel'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.error,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    width: 70,
+                    height: 30,
+                    child: Text(
+                      'Cancel',
+                      style: GoogleFonts.openSans(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.background,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
                 TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  child: const Text('Add to basket'),
                   onPressed: () {
                     context.read<HomeBloc>().add(BuyProduct(jwt.payload['id']));
                     Navigator.of(context).pop();
                   },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    width: 120,
+                    height: 30,
+                    child: Text(
+                      'Add to basket',
+                      style: GoogleFonts.openSans(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             );
           });
         },
       );
-      print(jwt.payload['id']);
     } on JWTError {
       print('jwt expired');
     }

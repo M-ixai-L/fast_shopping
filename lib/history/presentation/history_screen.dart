@@ -49,7 +49,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             child: Scaffold(
               backgroundColor: Color(0xFFD5F4E9),
               body: Padding(
-                padding: const EdgeInsets.only(top: 30, left: 38, right: 38),
+                padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
                 child: Column(
                   children: [searchFieldWidget, cardsWidget(state)],
                 ),
