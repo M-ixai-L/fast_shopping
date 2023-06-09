@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:fast_shopping/catalog/infrastructure/product_repository.dart';
 import 'package:fast_shopping/login/infrastructure/auth_repository.dart';
+import 'package:fast_shopping/models/fs_order.dart';
 import 'package:fast_shopping/models/fs_product.dart';
 import 'package:fast_shopping/models/fs_user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
 part 'catalog_bloc.freezed.dart';
 part 'catalog_event.dart';
@@ -50,12 +52,19 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
   }
 
   Future<void> _buyProduct(BuyProduct event, Emitter<CatalogState> emit) async {
+    final f = DateFormat('yyyy-MM-dd hh:mm');
+
     final user = await _authRepository.getUser();
     if (user != null) {
-      List<String> products = [...user.products, event.product];
+      final order = await productRepository.buyProduct(FSOrder(
+          orderId: '',
+          productId: event.product,
+          date: f.format(DateTime.now())));
+
+      List<String> products = [...user.products, order.orderId];
       final newUser = user.copyWith(products: products);
-      final updateUser = await productRepository.buyProduct(newUser);
-      emit(state.copyWith(user: updateUser));
+      final updateUser = await productRepository.updateUser(newUser);
+      emit(state.copyWith(user: newUser));
     }
   }
 

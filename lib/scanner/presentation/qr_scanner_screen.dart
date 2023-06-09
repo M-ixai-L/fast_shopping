@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrScannerScreen extends StatefulWidget {
@@ -55,9 +56,14 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
+      //setState(() {
+      if (result != null && result!.code != null) {
+        print(result!.code);
+        context.pop(result!.code!);
+        controller.dispose();
+      }
+      result = scanData;
+      //});
     });
   }
 

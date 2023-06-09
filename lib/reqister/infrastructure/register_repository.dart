@@ -29,6 +29,7 @@ class RegisterRepository {
         email: email,
         firstName: firstName,
         lastName: lastName,
+        image: firebaseUser.photoURL,
         products: [],
       );
 
@@ -53,6 +54,7 @@ class RegisterRepository {
       email: email,
       firstName: firstName,
       lastName: lastName,
+      image: _firebaseAuth.currentUser?.photoURL,
       products: [],
     );
 

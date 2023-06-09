@@ -1,6 +1,9 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:fast_shopping/basket/presentation/basket_screen.dart';
 import 'package:fast_shopping/catalog/infrastructure/product_repository.dart';
 import 'package:fast_shopping/catalog/presentation/catalog_screen.dart';
+import 'package:fast_shopping/history/presentation/history_screen.dart';
+import 'package:fast_shopping/home/application/bloc/home_bloc.dart';
 import 'package:fast_shopping/me/presentation/me_screen.dart';
 import 'package:fast_shopping/models/fs_product.dart';
 import 'package:fast_shopping/widgets/fs_text_field.dart';
@@ -26,10 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
   var activeIndex = 0;
 
   List<Widget> screens = [
-    CatalogScreen(),
-    BasketScreen(),
-    MeScreen(),
-    MeScreen(),
+    const CatalogScreen(),
+    const BasketScreen(),
+    const HistoryScreen(),
+    const MeScreen(),
   ];
 
   @override
@@ -47,9 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (BuildContext context) => screens[index]);
         },
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            context.push('/scanner');
-            //_showDialog(context);
+          onPressed: () async {
+            ProductRepository productRepository = context.read<GetIt>().get();
+            final user = await productRepository.getUser();
+            if (user.isAdmin) {
+              _showDialog(context);
+            } else {
+              openScanner(context);
+            }
           },
           backgroundColor: colorScheme.background,
           child: SvgPicture.asset(
@@ -179,5 +187,103 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
+  }
+}
+
+Future<void> openScanner(BuildContext context) async {
+  var result = await context.push<String>('/scanner');
+  if (result != null) {
+    try {
+      final jwt = JWT.verify(result, SecretKey('secret passphrase'));
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          context.read<HomeBloc>().add(GetProduct(jwt.payload['id']));
+          return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+            return AlertDialog(
+              content: state.isLoading || state.product == null
+                  ? const SizedBox(
+                      height: 100,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  : SizedBox(
+                      height: 60,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  state.product!.name,
+                                  style: GoogleFonts.raleway(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  state.product!.description,
+                                  style: GoogleFonts.raleway(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  '${state.product!.cost} \$',
+                                  style: GoogleFonts.raleway(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+              backgroundColor: const Color(0xFF4FFFC0),
+              actionsAlignment: MainAxisAlignment.spaceBetween,
+              actions: <Widget>[
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: const Text('Add to basket'),
+                  onPressed: () {
+                    context.read<HomeBloc>().add(BuyProduct(jwt.payload['id']));
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          });
+        },
+      );
+      print(jwt.payload['id']);
+    } on JWTError {
+      print('jwt expired');
+    }
   }
 }

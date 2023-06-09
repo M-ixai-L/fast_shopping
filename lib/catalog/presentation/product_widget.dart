@@ -6,16 +6,18 @@ class ProductWidget extends StatelessWidget {
   const ProductWidget({
     Key? key,
     required this.product,
-    required this.onPressed,
+    this.onPressed,
     this.onPressedText = 'BUY',
     required this.onDeletePressed,
     this.isAdmin = false,
+    this.date,
   }) : super(key: key);
 
   final FSProduct product;
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String onPressedText;
+  final String? date;
 
   final VoidCallback onDeletePressed;
 
@@ -29,13 +31,16 @@ class ProductWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         color: Theme.of(context).primaryColor,
       ),
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
+              mainAxisAlignment: date == null
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   product.name,
@@ -53,6 +58,22 @@ class ProductWidget extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
+                if (date != null)
+                  Column(
+                    children: [
+                      Text(
+                        date!,
+                        style: GoogleFonts.raleway(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      )
+                    ],
+                  ),
               ],
             ),
             Column(
@@ -66,6 +87,7 @@ class ProductWidget extends StatelessWidget {
                   ),
                 ),
                 // FSButton(onPressed: onPressed, text: 'BUY'),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     if (isAdmin)
@@ -89,26 +111,27 @@ class ProductWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                    TextButton(
-                      onPressed: onPressed,
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        width: 70,
-                        height: 30,
-                        child: Text(
-                          onPressedText,
-                          style: GoogleFonts.openSans(
-                            fontSize: 12,
-                            color: Theme.of(context).colorScheme.background,
-                            fontWeight: FontWeight.w600,
+                    if (onPressed != null)
+                      TextButton(
+                        onPressed: onPressed,
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          width: 70,
+                          height: 30,
+                          child: Text(
+                            onPressedText,
+                            style: GoogleFonts.openSans(
+                              fontSize: 12,
+                              color: Theme.of(context).colorScheme.background,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
-                    ),
                   ],
                 )
               ],

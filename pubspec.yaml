@@ -31,6 +31,8 @@ dependencies:
   cloud_firestore: ^4.7.1
   dart_jsonwebtoken: ^2.7.1
   qr_code_scanner: ^1.0.1
+  image_gallery_saver: ^2.0.1
+  permission_handler: ^10.3.0
 
   material_flat_bottom_bar:
     git:
@@ -38,6 +40,8 @@ dependencies:
       ref: migration-to-null-safety
   mocktail: ^0.3.0
   qr_flutter: ^4.0.0
+  path_provider: ^2.0.15
+  intl: ^0.18.1
 
 
 dev_dependencies:

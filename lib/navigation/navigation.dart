@@ -1,5 +1,6 @@
-import 'package:fast_shopping/code_generate/application/presentation.dart';
+import 'package:fast_shopping/code_generate/application/code_generate.dart';
 import 'package:fast_shopping/email_password_login/presentation/email_password_login_screen.dart';
+import 'package:fast_shopping/history/presentation/history_screen.dart';
 import 'package:fast_shopping/home/presentation/home_screen.dart';
 import 'package:fast_shopping/login/presentation/login_screen.dart';
 import 'package:fast_shopping/reqister/presentation/register_screen.dart';
@@ -40,12 +41,15 @@ final router = GoRouter(
       },
     ),
     GoRoute(
+      path: '/history',
+      builder: (context, state) {
+        return const HistoryScreen();
+      },
+    ),
+    GoRoute(
       path: '/generator',
       builder: (context, state) {
-        if (state.extra != null && state.extra is String) {
-          return CodeGeneratorScreen(data: state.extra as String);
-        }
-        return const CodeGeneratorScreen();
+        return CodeGeneratorScreen(data: state.extra as String);
       },
     ),
   ],

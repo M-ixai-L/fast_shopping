@@ -33,44 +33,61 @@ class _MeScreenState extends State<MeScreen> {
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 100),
-                child: Column(
-                  children: [
-                    Text(
-                      state.user?.email ?? '',
-                      style: GoogleFonts.raleway(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      state.user?.firstName ?? '',
-                      style: GoogleFonts.raleway(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      state.user?.lastName ?? '',
-                      style: GoogleFonts.raleway(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
+              if (state.user?.image != null)
+                Container(
+                  margin: const EdgeInsets.only(top: 100),
+                  height: 200,
+                  width: 200,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.black,
+                  ),
+                  child: Image.network(
+                    state.user!.image!,
+                    fit: BoxFit.fill,
+                  ),
+                )
+              else
+                SizedBox(
+                  height: 100,
                 ),
+              SizedBox(height: 50),
+              Column(
+                children: [
+                  Text(
+                    state.user?.email ?? '',
+                    style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    state.user?.firstName ?? '',
+                    style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    state.user?.lastName ?? '',
+                    style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 30),
+                    padding: const EdgeInsets.only(bottom: 30, top: 100),
                     child: FSButton(
                       color: Theme.of(context).colorScheme.error,
                       onPressed: () {

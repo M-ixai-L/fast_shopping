@@ -24,6 +24,7 @@ mixin _$FSUser {
   String get email => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   List<String> get products => throw _privateConstructorUsedError;
   List<String> get productsHistory => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $FSUserCopyWith<$Res> {
       String email,
       String firstName,
       String lastName,
+      String? image,
       List<String> products,
       List<String> productsHistory,
       bool isAdmin});
@@ -65,6 +67,7 @@ class _$FSUserCopyWithImpl<$Res, $Val extends FSUser>
     Object? email = null,
     Object? firstName = null,
     Object? lastName = null,
+    Object? image = freezed,
     Object? products = null,
     Object? productsHistory = null,
     Object? isAdmin = null,
@@ -86,6 +89,10 @@ class _$FSUserCopyWithImpl<$Res, $Val extends FSUser>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
@@ -113,6 +120,7 @@ abstract class _$$FSUser$CopyWith<$Res> implements $FSUserCopyWith<$Res> {
       String email,
       String firstName,
       String lastName,
+      String? image,
       List<String> products,
       List<String> productsHistory,
       bool isAdmin});
@@ -132,6 +140,7 @@ class __$$FSUser$CopyWithImpl<$Res>
     Object? email = null,
     Object? firstName = null,
     Object? lastName = null,
+    Object? image = freezed,
     Object? products = null,
     Object? productsHistory = null,
     Object? isAdmin = null,
@@ -153,6 +162,10 @@ class __$$FSUser$CopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
@@ -177,6 +190,7 @@ class _$FSUser$ implements FSUser$ {
       required this.email,
       required this.firstName,
       required this.lastName,
+      required this.image,
       this.products = const <String>[],
       this.productsHistory = const <String>[],
       this.isAdmin = false});
@@ -193,6 +207,8 @@ class _$FSUser$ implements FSUser$ {
   @override
   final String lastName;
   @override
+  final String? image;
+  @override
   @JsonKey()
   final List<String> products;
   @override
@@ -204,7 +220,7 @@ class _$FSUser$ implements FSUser$ {
 
   @override
   String toString() {
-    return 'FSUser(uid: $uid, email: $email, firstName: $firstName, lastName: $lastName, products: $products, productsHistory: $productsHistory, isAdmin: $isAdmin)';
+    return 'FSUser(uid: $uid, email: $email, firstName: $firstName, lastName: $lastName, image: $image, products: $products, productsHistory: $productsHistory, isAdmin: $isAdmin)';
   }
 
   @override
@@ -218,6 +234,7 @@ class _$FSUser$ implements FSUser$ {
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
+            (identical(other.image, image) || other.image == image) &&
             const DeepCollectionEquality().equals(other.products, products) &&
             const DeepCollectionEquality()
                 .equals(other.productsHistory, productsHistory) &&
@@ -232,6 +249,7 @@ class _$FSUser$ implements FSUser$ {
       email,
       firstName,
       lastName,
+      image,
       const DeepCollectionEquality().hash(products),
       const DeepCollectionEquality().hash(productsHistory),
       isAdmin);
@@ -256,6 +274,7 @@ abstract class FSUser$ implements FSUser {
       required final String email,
       required final String firstName,
       required final String lastName,
+      required final String? image,
       final List<String> products,
       final List<String> productsHistory,
       final bool isAdmin}) = _$FSUser$;
@@ -270,6 +289,8 @@ abstract class FSUser$ implements FSUser {
   String get firstName;
   @override
   String get lastName;
+  @override
+  String? get image;
   @override
   List<String> get products;
   @override

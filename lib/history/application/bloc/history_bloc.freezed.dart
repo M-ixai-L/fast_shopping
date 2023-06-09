@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'basket_bloc.dart';
+part of 'history_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$BasketEvent {
+mixin _$HistoryEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getUser,
@@ -81,16 +81,16 @@ mixin _$BasketEvent {
 }
 
 /// @nodoc
-abstract class $BasketEventCopyWith<$Res> {
-  factory $BasketEventCopyWith(
-          BasketEvent value, $Res Function(BasketEvent) then) =
-      _$BasketEventCopyWithImpl<$Res, BasketEvent>;
+abstract class $HistoryEventCopyWith<$Res> {
+  factory $HistoryEventCopyWith(
+          HistoryEvent value, $Res Function(HistoryEvent) then) =
+      _$HistoryEventCopyWithImpl<$Res, HistoryEvent>;
 }
 
 /// @nodoc
-class _$BasketEventCopyWithImpl<$Res, $Val extends BasketEvent>
-    implements $BasketEventCopyWith<$Res> {
-  _$BasketEventCopyWithImpl(this._value, this._then);
+class _$HistoryEventCopyWithImpl<$Res, $Val extends HistoryEvent>
+    implements $HistoryEventCopyWith<$Res> {
+  _$HistoryEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -106,7 +106,7 @@ abstract class _$$GetUserCopyWith<$Res> {
 
 /// @nodoc
 class __$$GetUserCopyWithImpl<$Res>
-    extends _$BasketEventCopyWithImpl<$Res, _$GetUser>
+    extends _$HistoryEventCopyWithImpl<$Res, _$GetUser>
     implements _$$GetUserCopyWith<$Res> {
   __$$GetUserCopyWithImpl(_$GetUser _value, $Res Function(_$GetUser) _then)
       : super(_value, _then);
@@ -119,7 +119,7 @@ class _$GetUser implements GetUser {
 
   @override
   String toString() {
-    return 'BasketEvent.getUser()';
+    return 'HistoryEvent.getUser()';
   }
 
   @override
@@ -218,7 +218,7 @@ class _$GetUser implements GetUser {
   }
 }
 
-abstract class GetUser implements BasketEvent {
+abstract class GetUser implements HistoryEvent {
   const factory GetUser() = _$GetUser;
 }
 
@@ -231,7 +231,7 @@ abstract class _$$GetProductsCopyWith<$Res> {
 
 /// @nodoc
 class __$$GetProductsCopyWithImpl<$Res>
-    extends _$BasketEventCopyWithImpl<$Res, _$GetProducts>
+    extends _$HistoryEventCopyWithImpl<$Res, _$GetProducts>
     implements _$$GetProductsCopyWith<$Res> {
   __$$GetProductsCopyWithImpl(
       _$GetProducts _value, $Res Function(_$GetProducts) _then)
@@ -245,7 +245,7 @@ class _$GetProducts implements GetProducts {
 
   @override
   String toString() {
-    return 'BasketEvent.getProducts()';
+    return 'HistoryEvent.getProducts()';
   }
 
   @override
@@ -344,7 +344,7 @@ class _$GetProducts implements GetProducts {
   }
 }
 
-abstract class GetProducts implements BasketEvent {
+abstract class GetProducts implements HistoryEvent {
   const factory GetProducts() = _$GetProducts;
 }
 
@@ -359,7 +359,7 @@ abstract class _$$PayProductCopyWith<$Res> {
 
 /// @nodoc
 class __$$PayProductCopyWithImpl<$Res>
-    extends _$BasketEventCopyWithImpl<$Res, _$PayProduct>
+    extends _$HistoryEventCopyWithImpl<$Res, _$PayProduct>
     implements _$$PayProductCopyWith<$Res> {
   __$$PayProductCopyWithImpl(
       _$PayProduct _value, $Res Function(_$PayProduct) _then)
@@ -389,7 +389,7 @@ class _$PayProduct implements PayProduct {
 
   @override
   String toString() {
-    return 'BasketEvent.payProduct(product: $product)';
+    return 'HistoryEvent.payProduct(product: $product)';
   }
 
   @override
@@ -496,7 +496,7 @@ class _$PayProduct implements PayProduct {
   }
 }
 
-abstract class PayProduct implements BasketEvent {
+abstract class PayProduct implements HistoryEvent {
   const factory PayProduct(final String product) = _$PayProduct;
 
   String get product;
@@ -516,7 +516,7 @@ abstract class _$$DeleteProductCopyWith<$Res> {
 
 /// @nodoc
 class __$$DeleteProductCopyWithImpl<$Res>
-    extends _$BasketEventCopyWithImpl<$Res, _$DeleteProduct>
+    extends _$HistoryEventCopyWithImpl<$Res, _$DeleteProduct>
     implements _$$DeleteProductCopyWith<$Res> {
   __$$DeleteProductCopyWithImpl(
       _$DeleteProduct _value, $Res Function(_$DeleteProduct) _then)
@@ -546,7 +546,7 @@ class _$DeleteProduct implements DeleteProduct {
 
   @override
   String toString() {
-    return 'BasketEvent.deleteProduct(id: $id)';
+    return 'HistoryEvent.deleteProduct(id: $id)';
   }
 
   @override
@@ -653,7 +653,7 @@ class _$DeleteProduct implements DeleteProduct {
   }
 }
 
-abstract class DeleteProduct implements BasketEvent {
+abstract class DeleteProduct implements HistoryEvent {
   const factory DeleteProduct(final String id) = _$DeleteProduct;
 
   String get id;
@@ -675,7 +675,7 @@ abstract class _$$EmitUserCopyWith<$Res> {
 
 /// @nodoc
 class __$$EmitUserCopyWithImpl<$Res>
-    extends _$BasketEventCopyWithImpl<$Res, _$EmitUser>
+    extends _$HistoryEventCopyWithImpl<$Res, _$EmitUser>
     implements _$$EmitUserCopyWith<$Res> {
   __$$EmitUserCopyWithImpl(_$EmitUser _value, $Res Function(_$EmitUser) _then)
       : super(_value, _then);
@@ -712,7 +712,7 @@ class _$EmitUser implements EmitUser {
 
   @override
   String toString() {
-    return 'BasketEvent.emitUser(user: $user)';
+    return 'HistoryEvent.emitUser(user: $user)';
   }
 
   @override
@@ -819,7 +819,7 @@ class _$EmitUser implements EmitUser {
   }
 }
 
-abstract class EmitUser implements BasketEvent {
+abstract class EmitUser implements HistoryEvent {
   const factory EmitUser(final FSUser user) = _$EmitUser;
 
   FSUser get user;
@@ -839,7 +839,7 @@ abstract class _$$EmitProductCopyWith<$Res> {
 
 /// @nodoc
 class __$$EmitProductCopyWithImpl<$Res>
-    extends _$BasketEventCopyWithImpl<$Res, _$EmitProduct>
+    extends _$HistoryEventCopyWithImpl<$Res, _$EmitProduct>
     implements _$$EmitProductCopyWith<$Res> {
   __$$EmitProductCopyWithImpl(
       _$EmitProduct _value, $Res Function(_$EmitProduct) _then)
@@ -874,7 +874,7 @@ class _$EmitProduct implements EmitProduct {
 
   @override
   String toString() {
-    return 'BasketEvent.emitProduct(product: $product)';
+    return 'HistoryEvent.emitProduct(product: $product)';
   }
 
   @override
@@ -982,7 +982,7 @@ class _$EmitProduct implements EmitProduct {
   }
 }
 
-abstract class EmitProduct implements BasketEvent {
+abstract class EmitProduct implements HistoryEvent {
   const factory EmitProduct(final List<FSOrder> product) = _$EmitProduct;
 
   List<FSOrder> get product;
@@ -992,22 +992,22 @@ abstract class EmitProduct implements BasketEvent {
 }
 
 /// @nodoc
-mixin _$BasketState {
+mixin _$HistoryState {
   List<FSProduct> get products => throw _privateConstructorUsedError;
   List<FSOrder> get orders => throw _privateConstructorUsedError;
   FSUser? get user => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $BasketStateCopyWith<BasketState> get copyWith =>
+  $HistoryStateCopyWith<HistoryState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BasketStateCopyWith<$Res> {
-  factory $BasketStateCopyWith(
-          BasketState value, $Res Function(BasketState) then) =
-      _$BasketStateCopyWithImpl<$Res, BasketState>;
+abstract class $HistoryStateCopyWith<$Res> {
+  factory $HistoryStateCopyWith(
+          HistoryState value, $Res Function(HistoryState) then) =
+      _$HistoryStateCopyWithImpl<$Res, HistoryState>;
   @useResult
   $Res call(
       {List<FSProduct> products,
@@ -1019,9 +1019,9 @@ abstract class $BasketStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BasketStateCopyWithImpl<$Res, $Val extends BasketState>
-    implements $BasketStateCopyWith<$Res> {
-  _$BasketStateCopyWithImpl(this._value, this._then);
+class _$HistoryStateCopyWithImpl<$Res, $Val extends HistoryState>
+    implements $HistoryStateCopyWith<$Res> {
+  _$HistoryStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -1070,11 +1070,11 @@ class _$BasketStateCopyWithImpl<$Res, $Val extends BasketState>
 }
 
 /// @nodoc
-abstract class _$$_BasketState$CopyWith<$Res>
-    implements $BasketStateCopyWith<$Res> {
-  factory _$$_BasketState$CopyWith(
-          _$_BasketState$ value, $Res Function(_$_BasketState$) then) =
-      __$$_BasketState$CopyWithImpl<$Res>;
+abstract class _$$_HistoryState$CopyWith<$Res>
+    implements $HistoryStateCopyWith<$Res> {
+  factory _$$_HistoryState$CopyWith(
+          _$_HistoryState$ value, $Res Function(_$_HistoryState$) then) =
+      __$$_HistoryState$CopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1088,11 +1088,11 @@ abstract class _$$_BasketState$CopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BasketState$CopyWithImpl<$Res>
-    extends _$BasketStateCopyWithImpl<$Res, _$_BasketState$>
-    implements _$$_BasketState$CopyWith<$Res> {
-  __$$_BasketState$CopyWithImpl(
-      _$_BasketState$ _value, $Res Function(_$_BasketState$) _then)
+class __$$_HistoryState$CopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_HistoryState$>
+    implements _$$_HistoryState$CopyWith<$Res> {
+  __$$_HistoryState$CopyWithImpl(
+      _$_HistoryState$ _value, $Res Function(_$_HistoryState$) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1103,7 +1103,7 @@ class __$$_BasketState$CopyWithImpl<$Res>
     Object? user = freezed,
     Object? isLoading = null,
   }) {
-    return _then(_$_BasketState$(
+    return _then(_$_HistoryState$(
       products: null == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
@@ -1126,8 +1126,8 @@ class __$$_BasketState$CopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BasketState$ implements _BasketState$ {
-  const _$_BasketState$(
+class _$_HistoryState$ implements _HistoryState$ {
+  const _$_HistoryState$(
       {final List<FSProduct> products = const [],
       final List<FSOrder> orders = const [],
       this.user,
@@ -1161,14 +1161,14 @@ class _$_BasketState$ implements _BasketState$ {
 
   @override
   String toString() {
-    return 'BasketState(products: $products, orders: $orders, user: $user, isLoading: $isLoading)';
+    return 'HistoryState(products: $products, orders: $orders, user: $user, isLoading: $isLoading)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BasketState$ &&
+            other is _$_HistoryState$ &&
             const DeepCollectionEquality().equals(other._products, _products) &&
             const DeepCollectionEquality().equals(other._orders, _orders) &&
             (identical(other.user, user) || other.user == user) &&
@@ -1187,16 +1187,16 @@ class _$_BasketState$ implements _BasketState$ {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BasketState$CopyWith<_$_BasketState$> get copyWith =>
-      __$$_BasketState$CopyWithImpl<_$_BasketState$>(this, _$identity);
+  _$$_HistoryState$CopyWith<_$_HistoryState$> get copyWith =>
+      __$$_HistoryState$CopyWithImpl<_$_HistoryState$>(this, _$identity);
 }
 
-abstract class _BasketState$ implements BasketState {
-  const factory _BasketState$(
+abstract class _HistoryState$ implements HistoryState {
+  const factory _HistoryState$(
       {final List<FSProduct> products,
       final List<FSOrder> orders,
       final FSUser? user,
-      final bool isLoading}) = _$_BasketState$;
+      final bool isLoading}) = _$_HistoryState$;
 
   @override
   List<FSProduct> get products;
@@ -1208,6 +1208,6 @@ abstract class _BasketState$ implements BasketState {
   bool get isLoading;
   @override
   @JsonKey(ignore: true)
-  _$$_BasketState$CopyWith<_$_BasketState$> get copyWith =>
+  _$$_HistoryState$CopyWith<_$_HistoryState$> get copyWith =>
       throw _privateConstructorUsedError;
 }

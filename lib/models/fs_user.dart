@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'fs_user.freezed.dart';
@@ -10,6 +12,7 @@ class FSUser with _$FSUser {
     required String email,
     required String firstName,
     required String lastName,
+    required String? image,
     @Default(<String>[]) List<String> products,
     @Default(<String>[]) List<String> productsHistory,
     @Default(false) bool isAdmin,

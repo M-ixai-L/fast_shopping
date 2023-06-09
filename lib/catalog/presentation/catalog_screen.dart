@@ -1,7 +1,7 @@
-import 'dart:convert';
-
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:fast_shopping/catalog/application/bloc/catalog_bloc.dart';
 import 'package:fast_shopping/catalog/presentation/product_widget.dart';
+import 'package:fast_shopping/home/presentation/home_screen.dart';
 import 'package:fast_shopping/models/fs_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,8 +27,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   void initState() {
     super.initState();
     bloc = context.read<GetIt>().get<CatalogBloc>();
-    bloc.add(GetProducts());
-    //bloc.add(GetUser());
+    bloc.add(const GetProducts());
   }
 
   @override
@@ -50,7 +49,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
           return GestureDetector(
             onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
             child: Scaffold(
-              backgroundColor: Color(0xFFD5F4E9),
+              backgroundColor: const Color(0xFFD5F4E9),
               body: Padding(
                 padding: const EdgeInsets.only(top: 30, left: 38, right: 38),
                 child: Column(
@@ -72,7 +71,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
       newLists = state.products;
     }
 
-    if (newLists.length == 0) {
+    if (newLists.isEmpty) {
       return Padding(
         padding: const EdgeInsets.only(top: 20),
         child: Text(
@@ -87,11 +86,20 @@ class _CatalogScreenState extends State<CatalogScreen> {
     }
     return Expanded(
       child: ListView.builder(
-        padding: EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.only(top: 30),
         itemCount: newLists.length,
         itemBuilder: (context, index) => GestureDetector(
           onTap: () async {
-            context.push('/generator', extra: jsonEncode(newLists[index]));
+            final jwt = JWT(
+              // Payload
+              {
+                'id': newLists[index].id,
+              },
+
+              issuer: 'https://github.com/jonasroussel/dart_jsonwebtoken',
+            );
+            String token = jwt.sign(SecretKey('secret passphrase'));
+            context.push('/generator', extra: token);
           },
           child: ProductWidget(
             product: newLists[index],
@@ -109,43 +117,63 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 
   Widget get searchFieldWidget {
-    return TextField(
-      controller: textEditingController,
-      onEditingComplete: () {
-        FocusScope.of(context).unfocus();
-      },
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        fillColor: Color(0xFF9ED8C3),
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-        ),
-        hintText: 'Search',
-        hintStyle: GoogleFonts.raleway(
-          fontSize: 12,
-          color: Colors.white,
-          fontWeight: FontWeight.w400,
-        ),
-        suffixIcon: textEditingController.text.isEmpty
-            ? Icon(
-                Icons.search,
-                color: Colors.white,
-              )
-            : IconButton(
-                onPressed: () {
-                  setState(() {
-                    textEditingController.clear();
-                  });
-                },
-                icon: Icon(Icons.close),
-                color: Colors.white,
+    return Row(
+      children: [
+        SizedBox(
+          width: 280,
+          child: TextField(
+            controller: textEditingController,
+            onEditingComplete: () {
+              FocusScope.of(context).unfocus();
+            },
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              fillColor: const Color(0xFF9ED8C3),
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
               ),
-      ),
-      onChanged: (value) {
-        setState(() {});
-      },
-      keyboardType: TextInputType.text,
+              hintText: 'Search',
+              hintStyle: GoogleFonts.raleway(
+                fontSize: 12,
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+              ),
+              suffixIcon: textEditingController.text.isEmpty
+                  ? const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        setState(() {
+                          textEditingController.clear();
+                        });
+                      },
+                      icon: const Icon(Icons.close),
+                      color: Colors.white,
+                    ),
+            ),
+            onChanged: (value) {
+              setState(() {});
+            },
+            keyboardType: TextInputType.text,
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        GestureDetector(
+          onTap: () {
+            openScanner(context);
+          },
+          child: Image.asset(
+            'assets/icons/qr_code.png',
+            height: 24,
+            width: 24,
+          ),
+        ),
+      ],
     );
   }
 

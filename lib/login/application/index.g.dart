@@ -6,8 +6,7 @@ part of 'index.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AppleAuthData$ _$$AppleAuthData$FromJson(Map<String, dynamic> json) =>
-    _$AppleAuthData$(
+_$AppleAuthData$ _$$AppleAuthData$FromJson(Map json) => _$AppleAuthData$(
       code: json['authorizationCode'] as String,
       idToken: json['idToken'] as String,
       nonce: json['nonce'] as String,
@@ -20,8 +19,7 @@ Map<String, dynamic> _$$AppleAuthData$ToJson(_$AppleAuthData$ instance) =>
       'nonce': instance.nonce,
     };
 
-_$GoogleAuthData$ _$$GoogleAuthData$FromJson(Map<String, dynamic> json) =>
-    _$GoogleAuthData$(
+_$GoogleAuthData$ _$$GoogleAuthData$FromJson(Map json) => _$GoogleAuthData$(
       id: json['googleId'] as String,
       email: json['email'] as String,
       idToken: json['idToken'] as String,
@@ -34,7 +32,7 @@ Map<String, dynamic> _$$GoogleAuthData$ToJson(_$GoogleAuthData$ instance) =>
       'idToken': instance.idToken,
     };
 
-_$AppUser$ _$$AppUser$FromJson(Map<String, dynamic> json) => _$AppUser$(
+_$AppUser$ _$$AppUser$FromJson(Map json) => _$AppUser$(
       uid: json['uid'] as String,
       email: json['email'] as String,
     );
@@ -45,7 +43,7 @@ Map<String, dynamic> _$$AppUser$ToJson(_$AppUser$ instance) =>
       'email': instance.email,
     };
 
-_$UserIntegrations$ _$$UserIntegrations$FromJson(Map<String, dynamic> json) =>
+_$UserIntegrations$ _$$UserIntegrations$FromJson(Map json) =>
     _$UserIntegrations$(
       isFitbitConnected: json['isFitbitConnected'] as bool? ?? false,
       isGoogleFitConnected: json['isGoogleFitConnected'] as bool? ?? false,
@@ -69,13 +67,13 @@ Map<String, dynamic> _$$UserIntegrations$ToJson(_$UserIntegrations$ instance) =>
           instance.isAppleHealthPreviouslyConnected,
     };
 
-_$UserProperties$ _$$UserProperties$FromJson(Map<String, dynamic> json) =>
-    _$UserProperties$(
+_$UserProperties$ _$$UserProperties$FromJson(Map json) => _$UserProperties$(
       integrations: json['integrations'] == null
           ? const UserIntegrations()
-          : UserIntegrations.fromJson(
-              json['integrations'] as Map<String, dynamic>),
-      experiments: json['experiments'] as Map<String, dynamic>? ??
+          : UserIntegrations.fromJson(json['integrations'] as Map),
+      experiments: (json['experiments'] as Map?)?.map(
+            (k, e) => MapEntry(k as String, e),
+          ) ??
           const <String, dynamic>{},
     );
 

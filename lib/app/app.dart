@@ -2,6 +2,8 @@ import 'package:fast_shopping/basket/application/bloc/basket_bloc.dart';
 import 'package:fast_shopping/catalog/application/bloc/catalog_bloc.dart';
 import 'package:fast_shopping/email_password_login/bloc/email_password_login_bloc.dart';
 import 'package:fast_shopping/fs_theme.dart';
+import 'package:fast_shopping/history/application/bloc/history_bloc.dart';
+import 'package:fast_shopping/home/application/bloc/home_bloc.dart';
 import 'package:fast_shopping/login/application/index.dart';
 import 'package:fast_shopping/me/application/bloc/me_bloc.dart';
 import 'package:fast_shopping/navigation/navigation.dart';
@@ -57,6 +59,16 @@ class _AppState extends State<App> {
           BlocProvider<BasketBloc>(
             create: (BuildContext context) {
               return widget.getIt.get<BasketBloc>();
+            },
+          ),
+          BlocProvider<HomeBloc>(
+            create: (BuildContext context) {
+              return widget.getIt.get<HomeBloc>();
+            },
+          ),
+          BlocProvider<HistoryBloc>(
+            create: (BuildContext context) {
+              return widget.getIt.get<HistoryBloc>();
             },
           ),
         ],

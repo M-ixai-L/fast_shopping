@@ -1,6 +1,5 @@
-import 'package:fast_shopping/basket/application/bloc/basket_bloc.dart';
 import 'package:fast_shopping/catalog/presentation/product_widget.dart';
-import 'package:fast_shopping/home/presentation/home_screen.dart';
+import 'package:fast_shopping/history/application/bloc/history_bloc.dart';
 import 'package:fast_shopping/models/fs_order.dart';
 import 'package:fast_shopping/models/fs_product.dart';
 import 'package:flutter/material.dart';
@@ -10,28 +9,28 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class BasketScreen extends StatefulWidget {
-  const BasketScreen({Key? key}) : super(key: key);
+class HistoryScreen extends StatefulWidget {
+  const HistoryScreen({Key? key}) : super(key: key);
 
   @override
-  _BasketScreenState createState() => _BasketScreenState();
+  _HistoryScreenState createState() => _HistoryScreenState();
 }
 
-class _BasketScreenState extends State<BasketScreen> {
-  late final BasketBloc bloc;
+class _HistoryScreenState extends State<HistoryScreen> {
+  late final HistoryBloc bloc;
 
   TextEditingController textEditingController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    bloc = context.read<GetIt>().get<BasketBloc>();
-    bloc.add(const BasketEvent.getProducts());
+    bloc = context.read<GetIt>().get<HistoryBloc>();
+    bloc.add(const HistoryEvent.getProducts());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BasketBloc, BasketState>(
+    return BlocConsumer<HistoryBloc, HistoryState>(
         listener: (_, state) {},
         bloc: bloc,
         builder: (context, state) {
@@ -60,7 +59,7 @@ class _BasketScreenState extends State<BasketScreen> {
         });
   }
 
-  Widget cardsWidget(BasketState state) {
+  Widget cardsWidget(HistoryState state) {
     List<FSOrder> newLists = [];
 
     if (textEditingController.text.isNotEmpty) {
@@ -69,6 +68,7 @@ class _BasketScreenState extends State<BasketScreen> {
     } else {
       newLists = state.orders;
     }
+
     if (newLists.length == 0) {
       return Padding(
         padding: const EdgeInsets.only(top: 20),
@@ -82,6 +82,7 @@ class _BasketScreenState extends State<BasketScreen> {
         ),
       );
     }
+
     return Expanded(
       child: ListView.builder(
           padding: const EdgeInsets.only(top: 30),
@@ -90,15 +91,10 @@ class _BasketScreenState extends State<BasketScreen> {
             if (state.products.isNotEmpty) {
               FSProduct? product = state.products.firstWhere(
                   (element) => element.id == newLists[index].productId);
-
               return ProductWidget(
                 product: product,
-                isAdmin: true,
-                onPressedText: 'PAY',
                 date: newLists[index].date,
-                onPressed: () {
-                  bloc.add(PayProduct(newLists[index].orderId));
-                },
+                isAdmin: true,
                 onDeletePressed: () {
                   bloc.add(DeleteProduct(newLists[index].orderId));
                 },
@@ -108,64 +104,56 @@ class _BasketScreenState extends State<BasketScreen> {
     );
   }
 
+  // String dataForProduct(List<Map<String, FSProduct>> list, FSProduct product){
+  //   //state.dates.
+  //   for (Map<String, String> basket in user.productsHistory!) {
+  //     for (FSProduct product in event.product) {
+  //       if (basket['id'] == product.id) {
+  //         sortList.add(product);
+  //         dates.add({basket['date']!: product});
+  //       }
+  //     }
+  //   }
+  //   return ' ';
+  // }
   Widget get searchFieldWidget {
-    return Row(
-      children: [
-        SizedBox(
-          width: 280,
-          child: TextField(
-            controller: textEditingController,
-            onEditingComplete: () {
-              FocusScope.of(context).unfocus();
-            },
-            style: const TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-              fillColor: const Color(0xFF9ED8C3),
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
-              hintText: 'Search',
-              hintStyle: GoogleFonts.raleway(
-                fontSize: 12,
+    return TextField(
+      controller: textEditingController,
+      onEditingComplete: () {
+        FocusScope.of(context).unfocus();
+      },
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        fillColor: const Color(0xFF9ED8C3),
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        hintText: 'Search',
+        hintStyle: GoogleFonts.raleway(
+          fontSize: 12,
+          color: Colors.white,
+          fontWeight: FontWeight.w400,
+        ),
+        suffixIcon: textEditingController.text.isEmpty
+            ? const Icon(
+                Icons.search,
                 color: Colors.white,
-                fontWeight: FontWeight.w400,
+              )
+            : IconButton(
+                onPressed: () {
+                  setState(() {
+                    textEditingController.clear();
+                  });
+                },
+                icon: Icon(Icons.close),
+                color: Colors.white,
               ),
-              suffixIcon: textEditingController.text.isEmpty
-                  ? const Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    )
-                  : IconButton(
-                      onPressed: () {
-                        setState(() {
-                          textEditingController.clear();
-                        });
-                      },
-                      icon: const Icon(Icons.close),
-                      color: Colors.white,
-                    ),
-            ),
-            onChanged: (value) {
-              setState(() {});
-            },
-            keyboardType: TextInputType.text,
-          ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        GestureDetector(
-          onTap: () {
-            openScanner(context);
-          },
-          child: Image.asset(
-            'assets/icons/qr_code.png',
-            height: 24,
-            width: 24,
-          ),
-        ),
-      ],
+      ),
+      onChanged: (value) {
+        setState(() {});
+      },
+      keyboardType: TextInputType.text,
     );
   }
 

@@ -6,11 +6,12 @@ part of 'fs_user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$FSUser$ _$$FSUser$FromJson(Map<String, dynamic> json) => _$FSUser$(
+_$FSUser$ _$$FSUser$FromJson(Map json) => _$FSUser$(
       uid: json['uid'] as String,
       email: json['email'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
+      image: json['image'] as String?,
       products: (json['products'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -27,6 +28,7 @@ Map<String, dynamic> _$$FSUser$ToJson(_$FSUser$ instance) => <String, dynamic>{
       'email': instance.email,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
+      'image': instance.image,
       'products': instance.products,
       'productsHistory': instance.productsHistory,
       'isAdmin': instance.isAdmin,
