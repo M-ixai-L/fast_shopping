@@ -230,6 +230,8 @@ Future<void> openScanner(BuildContext context) async {
                                 ),
                                 Text(
                                   state.product!.description,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 4,
                                   style: GoogleFonts.raleway(
                                     fontSize: 12,
                                     color: Colors.black,

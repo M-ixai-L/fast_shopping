@@ -57,9 +57,8 @@ class ProductRepository {
     await _firestore.collection('orders').doc(id).delete();
   }
 
-  Future<FSUser> updateUser(FSUser user) async {
+  Future<void> updateUser(FSUser user) async {
     await _firestore.collection('users').doc(user.uid).update(user.toJson());
-    return user;
   }
 
   Future<FSOrder> buyProduct(FSOrder order) async {

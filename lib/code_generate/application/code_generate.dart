@@ -15,11 +15,11 @@ class CodeGeneratorScreen extends StatefulWidget {
   CodeGeneratorScreen({super.key, required this.data});
 
   @override
-  State<StatefulWidget> createState() => CodeGeneratorScreenState();
+  State<StatefulWidget> createState() => _CodeGeneratorScreenState();
   String data;
 }
 
-class CodeGeneratorScreenState extends State<CodeGeneratorScreen> {
+class _CodeGeneratorScreenState extends State<CodeGeneratorScreen> {
   GlobalKey globalKey = GlobalKey();
 
   @override

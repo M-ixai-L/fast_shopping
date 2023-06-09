@@ -50,12 +50,18 @@ class ProductWidget extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                Text(
-                  product.description,
-                  style: GoogleFonts.raleway(
-                    fontSize: 12,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
+                Container(
+                  width: 140,
+                  padding: EdgeInsets.only(right: 13.0),
+                  child: Text(
+                    product.description,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    style: GoogleFonts.raleway(
+                      fontSize: 12,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
                 if (date != null)

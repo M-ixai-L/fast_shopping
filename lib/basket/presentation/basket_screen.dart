@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fast_shopping/basket/application/bloc/basket_bloc.dart';
 import 'package:fast_shopping/catalog/presentation/product_widget.dart';
 import 'package:fast_shopping/home/presentation/home_screen.dart';
@@ -14,19 +16,27 @@ class BasketScreen extends StatefulWidget {
   const BasketScreen({Key? key}) : super(key: key);
 
   @override
-  _BasketScreenState createState() => _BasketScreenState();
+  State<StatefulWidget> createState() => _BasketScreenState();
 }
 
 class _BasketScreenState extends State<BasketScreen> {
   late final BasketBloc bloc;
 
   TextEditingController textEditingController = TextEditingController();
-
+  double summaryCost = 0.0;
+  double oldSummaryCost = 0.0;
   @override
   void initState() {
     super.initState();
     bloc = context.read<GetIt>().get<BasketBloc>();
     bloc.add(const BasketEvent.getProducts());
+    Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      if (oldSummaryCost != summaryCost) {
+        setState(() {
+          oldSummaryCost = summaryCost;
+        });
+      }
+    });
   }
 
   @override
@@ -45,6 +55,7 @@ class _BasketScreenState extends State<BasketScreen> {
               ),
             );
           }
+
           return GestureDetector(
             onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
             child: Scaffold(
@@ -52,7 +63,19 @@ class _BasketScreenState extends State<BasketScreen> {
               body: Padding(
                 padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
                 child: Column(
-                  children: [searchFieldWidget, cardsWidget(state)],
+                  children: [
+                    searchFieldWidget,
+                    SizedBox(height: 5),
+                    Text(
+                      'Summary cost: $summaryCost',
+                      style: GoogleFonts.raleway(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    cardsWidget(state),
+                  ],
                 ),
               ),
             ),
@@ -69,9 +92,17 @@ class _BasketScreenState extends State<BasketScreen> {
     } else {
       newLists = state.orders;
     }
+    summaryCost = 0;
+    if (state.products.isNotEmpty) {
+      for (final order in newLists) {
+        FSProduct product = state.products
+            .firstWhere((element) => element.id == order.productId);
+        summaryCost += double.parse(product.cost);
+      }
+    }
     if (newLists.length == 0) {
       return Padding(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 10),
         child: Text(
           'Nothing found',
           style: GoogleFonts.raleway(
@@ -82,6 +113,7 @@ class _BasketScreenState extends State<BasketScreen> {
         ),
       );
     }
+
     return Expanded(
       child: ListView.builder(
           padding: const EdgeInsets.only(top: 30),

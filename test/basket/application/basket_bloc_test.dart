@@ -16,6 +16,7 @@ main() {
 
   FSUser fsUser = FSUser(
     uid: '123',
+    image: '',
     email: 'email',
     firstName: 'firstName',
     lastName: 'lastName',
