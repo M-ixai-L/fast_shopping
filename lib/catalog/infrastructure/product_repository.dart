@@ -44,6 +44,11 @@ class ProductRepository {
     return FSProduct.fromJson(doc.data()!);
   }
 
+  Future<void> updateProduct(FSProduct product) async {
+    final doc = _firestore.collection('products').doc(product.id);
+    await doc.set(product.toJson());
+  }
+
   Future<void> addProduct(FSProduct product) async {
     final doc = _firestore.collection('products').doc();
     await doc.set(product.copyWith(id: doc.id).toJson());

@@ -1,8 +1,11 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:fast_shopping/catalog/application/bloc/catalog_bloc.dart';
+import 'package:fast_shopping/catalog/infrastructure/product_repository.dart';
 import 'package:fast_shopping/catalog/presentation/product_widget.dart';
 import 'package:fast_shopping/home/presentation/home_screen.dart';
 import 'package:fast_shopping/models/fs_product.dart';
+import 'package:fast_shopping/widgets/fs_text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -89,6 +92,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
         padding: const EdgeInsets.only(top: 30),
         itemCount: newLists.length,
         itemBuilder: (context, index) => GestureDetector(
+          onLongPress: () {
+            if (state.user!.isAdmin) {
+              _showUpdateDialog(context, newLists[index]);
+            }
+          },
           onTap: () async {
             final jwt = JWT(
               // Payload
@@ -160,9 +168,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
             keyboardType: TextInputType.text,
           ),
         ),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         GestureDetector(
           onTap: () {
             openScanner(context);
@@ -174,6 +180,98 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<void> _showUpdateDialog(BuildContext context, FSProduct newProduct) {
+    TextEditingController nameController =
+        TextEditingController(text: newProduct.name);
+    TextEditingController descriptionController =
+        TextEditingController(text: newProduct.description);
+    TextEditingController costController =
+        TextEditingController(text: newProduct.cost);
+
+    final _formKey = GlobalKey<FormState>();
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text('Update product'),
+          content: Material(
+            color: Colors.transparent,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  FSTextFormField(
+                    title: 'Name',
+                    textColor: Colors.black,
+                    textEditingController: nameController,
+                  ),
+                  FSTextFormField(
+                    title: 'Description',
+                    textColor: Colors.black,
+                    textEditingController: descriptionController,
+                  ),
+                  FSTextFormField(
+                    title: 'Cost',
+                    textColor: Colors.black,
+                    textEditingController: costController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please fill cost';
+                      } else if (value.trim() == '') {
+                        return 'Please fill cost';
+                      }
+                      try {
+                        int.parse(value);
+                      } catch (_) {
+                        return 'Cost is number';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Save'),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  Navigator.of(context).pop();
+
+                  FSProduct product = FSProduct(
+                    id: newProduct.id,
+                    name: nameController.text,
+                    description: descriptionController.text,
+                    cost: costController.text,
+                  );
+
+                  context
+                      .read<GetIt>()
+                      .get<ProductRepository>()
+                      .updateProduct(product);
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

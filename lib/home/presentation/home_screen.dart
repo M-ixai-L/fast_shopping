@@ -164,6 +164,15 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
               child: const Text('Save'),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
